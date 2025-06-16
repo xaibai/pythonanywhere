@@ -55,7 +55,7 @@
         </select>
         <iframe id="mapIframe" width="100%" height="300" loading="lazy" allowfullscreen
           referrerpolicy="no-referrer-when-downgrade"
-          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBDA5qr1ddm5B05MHj6OwRiPDqkSuIIM8I&q=陽明山國家公園"></iframe>
+          src="https://www.google.com/maps/embed/v1/place?key=你的金鑰"></iframe>
       </div>
 
       <div class="chat-container">
@@ -142,7 +142,7 @@
     const mapIframe = document.getElementById('mapIframe');
     locSelect.addEventListener('change', () => {
       const q = encodeURIComponent(locSelect.value);
-      mapIframe.src = `https://www.google.com/maps/embed/v1/place?key=AIzaSyBDA5qr1ddm5B05MHj6OwRiPDqkSuIIM8I&q=${q}`;
+      mapIframe.src = `https://www.google.com/maps/embed/v1/place?key=這裡放入你的金鑰=${q}`;
     });
 
     const sendBtn = document.getElementById('sendBtn');
