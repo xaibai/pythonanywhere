@@ -312,15 +312,15 @@ API 金鑰：請記得替換 flask_app.py 中的 GROQ_API_KEY，這是 Groq API 
 
 錯誤處理：如果在請求 AI 助理或加載頁面時遇到錯誤，可以檢查伺服器的日誌，或者檢查 API 是否可用。
 ### 常見問題與解決方案
-1.無法連接到 AI 助理：
-(1).請確保 API 金鑰正確並且 Groq API 沒有遇到故障。
-2.前端無法顯示地圖：
-(1).檢查 Google Maps API 的金鑰和配置，確保能正確嵌入地圖。
-3.無法連接到 GROQ API:
-(1).確保你在 flask_app.py 中正確設置了 GROQ API 金鑰。
-(2).檢查你是否設置了環境變數 GROQ_API_KEY，並且 PythonAnywhere 上的網絡連接沒有被阻擋。
-4. Google 地圖顯示錯誤
-(1).確保你在 Google Cloud Console 中啟用了 Maps JavaScript API 和 Geocoding API，並且 API 金鑰設置正確。
-(2).確保 API 金鑰在 PythonAnywhere 上設置為環境變數並正確加載。
-5.API 金鑰洩漏
-(1).永遠不要將 API 金鑰直接寫入程式碼中，使用環境變數來保護金鑰。
+1.無法連接到 AI 助理： <br />
+(1).請確保 API 金鑰正確並且 Groq API 沒有遇到故障。 <br />
+2.前端無法顯示地圖： <br />
+(1).檢查 Google Maps API 的金鑰和配置，確保能正確嵌入地圖。 <br />
+3.無法連接到 GROQ API: <br />
+(1).確保你在 flask_app.py 中正確設置了 GROQ API 金鑰。 <br />
+(2).檢查你是否設置了環境變數 GROQ_API_KEY，並且 PythonAnywhere 上的網絡連接沒有被阻擋。 <br />
+4. Google 地圖顯示錯誤 <br />
+(1).確保你在 Google Cloud Console 中啟用了 Maps JavaScript API 和 Geocoding API，並且 API 金鑰設置正確。 <br />
+(2).確保 API 金鑰在 PythonAnywhere 上設置為環境變數並正確加載。 <br />
+5.API 金鑰洩漏 <br />
+(1).永遠不要將 API 金鑰直接寫入程式碼中，使用環境變數來保護金鑰。 <br />
