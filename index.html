@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <title>旅遊行程規劃網站</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+    header, nav, main, footer { padding: 1rem; }
+    header { background-color: #84c1ff; color: white; }
+    nav { background-color: #f0f0f0; margin-bottom: 1rem; }
+    .highlight-btn {
+      background-color: #ff9c9c;
+      border: none;
+      padding: 0.5rem 1rem;
+      color: #fff;
+      cursor: pointer;
+      font-size: 1rem;
+      border-radius: 5px;
+    }
+    .day-plan {
+      border: 1px solid #ccc;
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>旅遊行程規劃網站</h1>
+    <p>自由選擇與組合景點，幫您安排完美旅程</p>
+  </header>
+
+  <nav>
+    <a href="index.html">首頁</a> |
+    <a href="itinerary.html">行程規劃</a>
+  </nav>
+
+  <main>
+    <section>
+      <h2>規劃您的旅遊行程</h2>
+      <form action="itinerary.html" method="GET">
+        <label for="days">請選擇旅遊天數：</label>
+        <select name="days" id="days">
+          <option value="1">1 天</option>
+          <option value="2">2 天</option>
+          <option value="3">3 天</option>
+          <option value="4">4 天</option>
+          <option value="5">5 天</option>
+        </select>
+        <button class="highlight-btn" type="submit">開始規劃</button>
+      </form>
+    </section>
+  </main>
+</body>
+</html>

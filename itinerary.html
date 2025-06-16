@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <title>旅遊行程規劃 + AI 助理</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+    header, nav, main { padding: 1rem; }
+    header { background-color: #84c1ff; color: white; }
+    nav { background-color: #f0f0f0; margin-bottom: 1rem; }
+    .container { display: flex; flex-wrap: wrap; gap: 20px; }
+    .itinerary { flex: 1; min-width: 300px; }
+    .activities { flex: 2; min-width: 300px; }
+    .day-plan { border: 1px solid #ccc; padding: 1rem; margin-bottom: 1rem; }
+    .activity { margin-bottom: 1rem; border: 1px solid #ccc; padding: 0.5rem; }
+    .map-chat-container { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; }
+    .map-container, .chat-container { flex: 1; min-width: 300px; border: 1px solid #ccc; padding: 1rem; }
+    .messages { height: 300px; overflow-y: auto; border: 1px solid #ccc; padding: 0.5rem; margin-bottom: 0.5rem; background: #f9f9f9; }
+    .message.user { text-align: right; color: #0077cc; }
+    .message.bot { text-align: left; color: #333; }
+    .chat-input { display: flex; }
+    .chat-input input { flex: 1; padding: 0.5rem; }
+    .chat-input button { padding: 0.5rem 1rem; margin-left: 0.5rem; }
+    .total-cost { font-size: 1.2rem; font-weight: bold; color: #333; margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>旅遊行程規劃網站 + AI 助理</h1>
+    <p>自由選擇與組合景點，幫您安排完美旅程</p>
+  </header>
+
+  <nav>
+    <a href="index.html">首頁</a> |
+    <a href="itinerary.html">行程規劃</a>
+  </nav>
+
+  <main>
+    <h2 id="tripTitle">旅遊行程</h2>
+    <div class="container">
+      <div class="itinerary"></div>
+      <div class="activities" id="activityContainer">
+        <h2>台北行程</h2>
+      </div>
+    </div>
+
+    <div class="map-chat-container">
+      <div class="map-container">
+        <label for="locSelect">選擇地點：</label>
+        <select id="locSelect">
+          <option value="陽明山國家公園">陽明山國家公園</option>
+          <option value="國立故宮博物院">國立故宮博物院</option>
+          <option value="貓空">貓空</option>
+          <option value="台北101">台北101</option>
+        </select>
+        <iframe id="mapIframe" width="100%" height="300" loading="lazy" allowfullscreen
+          referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBDA5qr1ddm5B05MHj6OwRiPDqkSuIIM8I&q=陽明山國家公園"></iframe>
+      </div>
+
+      <div class="chat-container">
+        <h3>旅遊助理</h3>
+        <div class="messages" id="messages"></div>
+        <div class="chat-input">
+          <input type="text" id="chatMessage" placeholder="輸入訊息...">
+          <button id="sendBtn">送出</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const itinerary = {};
+    const days = parseInt(new URLSearchParams(location.search).get('days')) || 1;
+    const itineraryDiv = document.querySelector('.itinerary');
+    const activityDiv = document.getElementById('activityContainer');
+    const title = document.getElementById('tripTitle');
+    title.textContent = `共 ${days} 天的旅遊行程`;
+
+    for (let i = 1; i <= days; i++) {
+      const plan = document.createElement('div');
+      plan.className = 'day-plan';
+      plan.setAttribute('data-day', i);
+      plan.innerHTML = `<h3>第 ${i} 天</h3>`;
+      itineraryDiv.appendChild(plan);
+    }
+
+    const costDiv = document.createElement('div');
+    costDiv.id = 'totalCost';
+    costDiv.className = 'total-cost';
+    costDiv.textContent = '總預估費用：NT$0';
+    itineraryDiv.appendChild(costDiv);
+
+    const activities = [
+      { name: '陽明山國家公園', price: 800, description: '自然景觀優美，是著名的休閒勝地。' },
+      { name: '國立故宮博物院', price: 350, description: '收藏大量中國古文物與藝術珍品。' },
+      { name: '貓空', price: 1000, description: '搭纜車、喝茶、看夜景的絕佳地點。' },
+      { name: '台北101', price: 500, description: '台北地標性建築，觀景台視野遼闊。' }
+    ];
+
+    activities.forEach(activity => {
+      const act = document.createElement('div');
+      act.className = 'activity';
+      act.innerHTML = `
+        <h3>${activity.name}</h3>
+        <p>${activity.description}</p>
+        <p>費用：約 NT$${activity.price}</p>
+        <label>選擇天數：</label>
+        <select class="day-select">${[...Array(days)].map((_, i) => `<option value="${i+1}">第 ${i+1} 天</option>`).join('')}</select>
+        <button class="add-btn" data-name="${activity.name}" data-price="${activity.price}">加入行程</button>
+      `;
+      activityDiv.appendChild(act);
+    });
+
+    document.querySelectorAll('.add-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const parent = btn.closest('.activity');
+        const day = parseInt(parent.querySelector('.day-select').value);
+        const name = btn.dataset.name;
+        const price = parseInt(btn.dataset.price);
+        addActivityToItinerary(name, day, price);
+      });
+    });
+
+    function addActivityToItinerary(name, day, price) {
+      if (!itinerary[day]) itinerary[day] = [];
+      itinerary[day].push({ name, price });
+      const dayEl = document.querySelector(`.day-plan[data-day="${day}"]`);
+      const p = document.createElement('p');
+      p.innerText = `${name} — NT$${price}`;
+      dayEl.appendChild(p);
+      updateTotalCost();
+    }
+
+    function updateTotalCost() {
+      let total = 0;
+      Object.values(itinerary).forEach(arr => arr.forEach(item => total += item.price));
+      document.getElementById('totalCost').innerText = `總預估費用：NT$${total}`;
+    }
+
+    const locSelect = document.getElementById('locSelect');
+    const mapIframe = document.getElementById('mapIframe');
+    locSelect.addEventListener('change', () => {
+      const q = encodeURIComponent(locSelect.value);
+      mapIframe.src = `https://www.google.com/maps/embed/v1/place?key=AIzaSyBDA5qr1ddm5B05MHj6OwRiPDqkSuIIM8I&q=${q}`;
+    });
+
+    const sendBtn = document.getElementById('sendBtn');
+    const chatInput = document.getElementById('chatMessage');
+    const messagesDiv = document.getElementById('messages');
+
+    function appendMessage(text, sender) {
+      const msg = document.createElement('div');
+      msg.className = `message ${sender}`;
+      msg.innerText = text;
+      messagesDiv.appendChild(msg);
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+
+    sendBtn.addEventListener('click', () => {
+      const text = chatInput.value.trim();
+      if (!text) return;
+      appendMessage(text, 'user');
+      chatInput.value = '';
+
+      fetch("/api/ai-chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: text })
+      })
+      .then(res => res.json())
+      .then(data => {
+        appendMessage(data.reply, 'bot');
+      })
+      .catch(err => {
+        appendMessage("⚠️ 請求失敗：" + err.message, 'bot');
+      });
+    });
+
+    chatInput.addEventListener('keyup', e => {
+      if (e.key === 'Enter') sendBtn.click();
+    });
+  </script>
+</body>
+</html>
