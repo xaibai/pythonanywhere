@@ -20,11 +20,11 @@ pythonantwhere網址:https://xaibai.pythonanywhere.com/
     - [上傳檔案到 PythonAnywhere](#上傳檔案到PythonAnywhere)
     - [配置靜態資源與模板](#配置靜態資源與模板)
     - [安裝所需的 Python 套件](#安裝所需的Python套件)
-5. [更新 flask_app.py 和 API 金鑰配置](#更新 flask_app.py 和 API 金鑰配置)
-    - [配置 GROQ API 金鑰](#配置 GROQ API 金鑰)
+5. [更新 flask_app.py 和 API 金鑰配置](#更新flask_app.py和API金鑰配置)
+    - [配置 GROQ API 金鑰](#配置GROQ_API金鑰)
     - [設置環境變數](#設置環境變數)
-    - [配置 Google Maps API 金鑰](#配置 Google Maps API 金鑰)
-    - [更新 itinerary.html 中的 Google 地圖嵌入](#更新 itinerary.html 中的 Google 地圖嵌入)
+    - [配置 Google Maps API 金鑰](#配置Google_Maps_API金鑰)
+    - [更新 itinerary.html 中的 Google 地圖嵌入](#更新itinerary.html中的Google地圖嵌入)
 7. [程式碼結構](#程式碼結構)
     - [`flask_app.py`](#flask_apppy)
     - [`index.html`](#indexhtml)
@@ -112,6 +112,7 @@ GROQ_API_KEY = "你的Groq API金鑰"
 python flask_app.py
 ```
 伺服器啟動後，你可以在瀏覽器中訪問 http://localhost:5000 來查看網站。
+
 ### 部署 Flask 應用到 PythonAnywhere
 這部分將指導你如何將你的 Flask 應用 部署到 PythonAnywhere，並配置 GROQ API 和 Google Maps API。
 ### 創建 PythonAnywhere 帳戶
