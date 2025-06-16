@@ -101,6 +101,7 @@ source venv/bin/activate
 ```
 pip install flask requests
 ```
+---
 ### 配置 API 金鑰
 在 flask_app.py 中，你需要替換以下代碼中的 GROQ_API_KEY 為你從 Groq 獲得的 API 金鑰。找到這一行並進行替換：
 ```
@@ -112,6 +113,8 @@ GROQ_API_KEY = "你的Groq API金鑰"
 python flask_app.py
 ```
 伺服器啟動後，你可以在瀏覽器中訪問 http://localhost:5000 來查看網站。
+
+---
 
 ### 部署 Flask 應用到 PythonAnywhere
 這部分將指導你如何將你的 Flask 應用 部署到 PythonAnywhere，並配置 GROQ API 和 Google Maps API。
@@ -134,6 +137,9 @@ if path not in sys.path:
 
 from flask_app import app as application  # 替換為你的主 Python 檔案名稱
 ```
+
+---
+
 ### 上傳檔案到 PythonAnywhere
 1.進入 PythonAnywhere 的 Files 頁面，創建一個新的目錄來存放你的專案檔案，例如 
 ```
@@ -164,6 +170,9 @@ Flask 預期將靜態檔案（如 CSS 和 JavaScript）放在 static/ 目錄下�
 pip install --user flask requests
 ```
 這將會在 PythonAnywhere 上安裝所需的 Python 套件。
+
+---
+
 ## 更新 flask_app.py 和 API 金鑰配置
 ### 配置 GROQ API 金鑰
 1.登入 GROQ 並創建帳戶，然後取得你的 GROQ API 金鑰。
@@ -285,6 +294,8 @@ if __name__ == '__main__':
     <button class="add-btn" data-name="陽明山國家公園" data-price="800">加入行程</button>
 </div>
 ```
+---
+
 ## AI 助理介紹
 AI 助理是基於 Groq API 的 LLaMA 模型，它可以與用戶進行對話，根據用戶的需求提供景點推薦、旅遊建議等。
 
